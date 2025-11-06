@@ -18,7 +18,7 @@ function ProjectMangement() {
 
     let filteredTasks = [];
     if (tasks?.tasks) {
-        filteredTasks = tasks.tasks.filter((task)=> task.project._id === projectId).filter(task => {
+        filteredTasks = tasks.tasks.filter((task)=> task.project?._id === projectId).filter(task => {
 
             if (currentStatus !== 'All' && task.status !== currentStatus) {
                 return false;
@@ -101,7 +101,7 @@ function ProjectMangement() {
                                     <strong>Statuses:</strong>
                                     <span className="badge bg-primary ms-2" onClick={() => updateFilter({ status: 'All' })} style={{ cursor: 'pointer' }}>All</span>
                                     {statuses.map((status) => (
-                                        <span onClick={() => updateFilter({ status: status })} className="badge bg-primary ms-2" style={{ cursor: 'pointer' }}>{status}</span>
+                                        <span key={status} onClick={() => updateFilter({ status: status })} className="badge bg-primary ms-2" style={{ cursor: 'pointer' }}>{status}</span>
                                     ))}
 
                                     <br />
