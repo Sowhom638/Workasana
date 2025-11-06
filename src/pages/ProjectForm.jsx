@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import Header from '../components/Header';
+import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 
 function ProjectForm() {
@@ -39,12 +40,13 @@ function ProjectForm() {
             if (!response.ok) throw new Error("Error while creating new project");
             const data = await response.json();
             console.log(data);
-
+            toast.success("New project is created!");
             setProjectName("");
             setProjectDescription("");
-            setTimeout(() => navigate("/projects"), 500)
+            setTimeout(() => navigate("/projects"), 700)
         } catch (error) {
-            submitError(error)
+            submitError(error);
+            toast.warning(error);
         } finally {
             setIsSubmitting(false);
         }
@@ -87,8 +89,8 @@ function ProjectForm() {
                                             onChange={(e) => setProjectName(e.target.value)}
                                             required
                                         />
-                                        </div>
-                                         <div className="form-group my-2">
+                                    </div>
+                                    <div className="form-group my-2">
                                         <label htmlFor="projectDescription">Project Description</label>
                                         <input
                                             type="text"
@@ -116,6 +118,7 @@ function ProjectForm() {
                     </div>
                 </div>
             </div>
+            <ToastContainer position="bottom-right" />
         </>
     )
 }

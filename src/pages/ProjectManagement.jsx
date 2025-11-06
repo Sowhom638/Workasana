@@ -115,7 +115,7 @@ function ProjectMangement() {
                                                 <span className="visually-hidden">Loading...</span>
                                             </div>}
                                             {userError && <p className="text-danger">{userError}</p>}
-                                            {'  '}No sales Agent is listed</span>
+                                            {'  '}No owners is listed</span>
                                     )}
                                 </div>
                                 <div className="d-flex gap-3">

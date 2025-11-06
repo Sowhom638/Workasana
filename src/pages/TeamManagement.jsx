@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../useFetch'
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
 import Header from '../components/Header';
 import { useState } from 'react';
 
@@ -38,9 +39,11 @@ function TeamManagement() {
       if (!response.ok) throw new Error("Error while creating new team");
       const data = await response.json();
       console.log(data);
-      window.location.reload();
+      toast.success("New team is created.");
+      setTimeout(() =>window.location.reload() , 700);
     } catch (error) {
       setSubmitError(error);
+      toast.warning(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -118,6 +121,7 @@ function TeamManagement() {
           </div>
         </div>
       </div>
+      <ToastContainer position="bottom-right" />
     </>
   )
 }

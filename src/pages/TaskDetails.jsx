@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../useFetch'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import { MdKeyboardArrowLeft } from "react-icons/md";
 import Header from '../components/Header';
 
 function TaskDetails() {
@@ -43,9 +44,11 @@ function TaskDetails() {
             if (!response.ok) throw new Error("Error while marking as 'Completed'");
             const data = await response.json();
             console.log(data);
-            window.location.reload();
+            toast.success("Marked as Completed!");
+            setTimeout(() => window.location.reload(), 700);
         } catch (error) {
             setSubmitError(error);
+            toast.warning(error);
         } finally {
             setIsSubmitting(false);
         }
@@ -95,16 +98,19 @@ function TaskDetails() {
                                             <p><strong>Due Date: </strong>{`${dueDate.getDate()}/${dueDate.getMonth()}/${dueDate.getFullYear()}`}</p>
                                             <p><strong>Status: </strong>{task?.task?.status}</p>
                                             <p><strong>Time Remaining: </strong>{task?.task?.timeToComplete} Days</p>
-                                            <button disabled={isSubmitting} className="btn btn-primary" onClick={hadleMarkAsComplete}>
-                                                {isSubmitting ? (
-                                                    <>
-                                                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                        Marking as 'Completed'...
-                                                    </>
-                                                ) : (
-                                                    " Mark as 'Completed"
-                                                )}
-                                            </button>
+                                            <div className="d-flex gap-2">
+                                                <button disabled={isSubmitting} className={`btn ${task?.task?.status === "Completed" ? "btn-secondary" : "btn-primary"}`} onClick={hadleMarkAsComplete}>
+                                                    {isSubmitting ? (
+                                                        <>
+                                                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                            Marking as 'Completed'...
+                                                        </>
+                                                    ) : (
+                                                        task?.task?.status === "Completed" ? "Completed" : " Mark as 'Completed"
+                                                    )}
+                                                </button>
+                                                <Link className='text-decoration-none btn btn-dark' to={`/tasks/${taskId}/updateTask`}>Edit Task</Link>
+                                            </div>
                                         </div>
                                     ) : (
                                         <span className="badge fs-5 bg-light text-dark border">
@@ -124,6 +130,7 @@ function TaskDetails() {
                     </div>
                 </div>
             </div>
+            <ToastContainer position="bottom-right" />
         </>
     )
 }

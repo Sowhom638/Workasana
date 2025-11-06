@@ -2,11 +2,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import Header from '../components/Header';
 import { ToastContainer, toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFetch from '../useFetch';
 
-function TaskForm() {
-    const { projectId } = useParams()
+function UpdateTaskForm() {
+    const { taskId } = useParams()
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState(null);
     const [taskName, setTaskName] = useState("");
@@ -20,8 +20,18 @@ function TaskForm() {
     const { data: teams, loading: teamLoading, error: teamError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/teams`);
     const { data: tagsData, loading: tagLoading, error: tagError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tags`);
     const { data: users, loading: userLoading, error: userError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/auth/users`);
-    const { data: project, loading: projectLoading, error: projectError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/projects/${projectId}`);
+    const { data: task, loading: taskLoading, error: taskError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/${taskId}`);
 
+    useEffect(()=>{
+        if(task && task?.task){
+            setTaskName(task?.task?.name || "");
+            setTeamName(task?.task?.team || "");
+            setTimeToComplete(task?.task?.timeToComplete || 0);
+            setOwnerName(task?.task?.owners || []);
+            setTag(task?.task?.tags || []);
+            setStatus(task?.task?.status || "")
+        }
+    },[task])
     const tags = tagsData?.tags || [];
     function handleTag(e) {
         let selectedTagValues = Array.from(e.target.selectedOptions, option => option.value);
@@ -85,12 +95,11 @@ function TaskForm() {
             if (token) {
                 headers.Authorization = `Bearer ${token}`;
             }
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tasks`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/${taskId}`, {
                 method: "POST",
                 headers,
                 body: JSON.stringify({
                     name: taskName,
-                    project: projectId,
                     team: teamName,
                     owners: ownerName,
                     tags: tag,
@@ -104,18 +113,12 @@ function TaskForm() {
                 navigate('/login', { replace: true });
                 throw new Error("Error while creating new team");
             }
-            if (!response.ok) throw new Error("Error while creating new project");
+            if (!response.ok) throw new Error("Error while creating new task");
             const data = await response.json();
             console.log(data);
 
-            toast.success("New task is created!");
-            setTaskName("");
-            setTeamName("");
-            setStatus("");
-            setTimeToComplete(0);
-            setTag([]);
-            setOwnerName([]);
-            setTimeout(() => navigate(`/projects/${projectId}`), 700)
+            toast.success("task is updated!");
+            setTimeout(() => navigate(`/tasks/${taskId}`), 700)
         } catch (error) {
             submitError(error);
             toast.warning(error);
@@ -129,7 +132,7 @@ function TaskForm() {
                 <Header />
                 <div className="card w-auto shadow-sm border rounded-3">
                     <div className="card-header bg-white text-center py-3">
-                        <h5 className="mb-0 fw-bold text-primary text-center">Create New Task for '{project?.project?.name}'</h5>
+                        <h5 className="mb-0 fw-bold text-primary text-center">Edit Task '{task?.task?.name}'</h5>
                     </div>
 
                     <div className="card-body p-0">
@@ -138,8 +141,8 @@ function TaskForm() {
                             <div className="col-md-3 border-end bg-light">
                                 <div className="p-3">
                                     <h6 className="text-secondary fw-bold mb-3">Sidebar</h6>
-                                    <Link to={`/projects/${projectId}`} className="text-dark text-decoration-none d-block p-2 rounded hover-bg">
-                                        <MdKeyboardArrowLeft /> Back to Project
+                                    <Link to={`/tasks/${taskId}`} className="text-dark text-decoration-none d-block p-2 rounded hover-bg">
+                                        <MdKeyboardArrowLeft /> Back to task
                                     </Link>
                                 </div>
                             </div>
@@ -290,4 +293,4 @@ function TaskForm() {
     )
 }
 
-export default TaskForm;
+export default UpdateTaskForm;

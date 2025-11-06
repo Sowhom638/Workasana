@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom';
 import useFetch from '../useFetch'
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import { MdKeyboardArrowLeft } from "react-icons/md";
 import Header from '../components/Header';
 
 function Settings() {
@@ -36,9 +37,11 @@ function Settings() {
             if (!response.ok) throw new Error("Error while deleting project");
             const data = await response.json();
             console.log(data);
-            window.location.reload();
+            toast.success("Project is deleted!");
+            setTimeout(() => window.location.reload(), 700);
         } catch (error) {
             setSubmitError(error);
+            toast.warning(error);
         }
     }
 
@@ -66,9 +69,12 @@ function Settings() {
             if (!response.ok) throw new Error("Error while deleting task");
             const data = await response.json();
             console.log(data);
-            window.location.reload();
+            toast.success("task is deleted!");
+            setTimeout(() => window.location.reload(), 700);
+
         } catch (error) {
             setSubmitError(error);
+            toast.warning(error);
         }
     }
 
@@ -87,11 +93,11 @@ function Settings() {
                             <div className="col-md-3 border-end bg-light">
                                 <div className="p-3">
                                     <h6 className="text-secondary fw-bold mb-3">Sidebar</h6>
-                                    
-                                                <Link to={`/dashboard`} className="text-dark text-decoration-none d-block p-2 rounded hover-bg">
-                                                    <MdKeyboardArrowLeft />Back to Dashboard
-                                                </Link>
-                                            
+
+                                    <Link to={`/dashboard`} className="text-dark text-decoration-none d-block p-2 rounded hover-bg">
+                                        <MdKeyboardArrowLeft />Back to Dashboard
+                                    </Link>
+
                                 </div>
                             </div>
 
@@ -105,7 +111,7 @@ function Settings() {
                                     <ul>
                                         {projects && projects?.projects?.length > 0 ? projects?.projects?.map((project) => (
                                             <li key={project._id} className="my-1">
-                                                <b>{project.name}</b> - {project.description} - <button className="btn btn-danger" onClick={()=>handleDeleteProject(project._id)}>Delete</button>
+                                                <b>{project.name}</b> - {project.description} - <button className="btn btn-danger" onClick={() => handleDeleteProject(project._id)}>Delete</button>
                                             </li>
                                         )) : (
                                             <span className="badge fs-5 bg-light text-dark border">
@@ -122,7 +128,7 @@ function Settings() {
                                     <h6 className="fw-bold mb-2">My Tasks:</h6>
                                     <ul className="ms-3">
                                         {filteredTasks?.length > 0 ? filteredTasks?.map((task) => (
-                                            <li key={task._id} className="mb-1"> {task.name} - <span>{task.timeToComplete} days remained - </span> {task.owners.map((owner) => (<span className="mx-1"><u>{owner.name}</u></span>))} - <button className="btn btn-danger" onClick={()=>handleDeleteTask(task._id)}>Delete</button></li>
+                                            <li key={task._id} className="mb-1"> {task.name} - <span>{task.timeToComplete} days remained - </span> {task.owners.map((owner) => (<span className="mx-1"><u>{owner.name}</u></span>))} - <button className="btn btn-danger" onClick={() => handleDeleteTask(task._id)}>Delete</button></li>
                                         )) : (
                                             <span className="badge fs-5 bg-light text-dark border">
                                                 {taskLoading && <div className="spinner-border text-primary" role="status">
@@ -144,6 +150,7 @@ function Settings() {
                     </div>
                 </div>
             </div>
+            <ToastContainer position="bottom-right" />
         </>
     )
 }

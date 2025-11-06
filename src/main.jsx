@@ -14,6 +14,7 @@ import ProjectMangement from './pages/ProjectManagement.jsx'
 import TaskDetails from './pages/TaskDetails.jsx'
 import Settings from './pages/Settings.jsx'
 import Reports from './pages/Reports.jsx'
+import UpdateTaskForm from './pages/UpdateTaskForm.jsx'
  
 const router = createBrowserRouter([
   {
@@ -97,6 +98,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <TaskForm />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/tasks/:taskId/updateTask",
+    element: (
+      <ProtectedRoute>
+        <UpdateTaskForm />
       </ProtectedRoute>
     )
   }

@@ -15,7 +15,7 @@ function Login() {
                 },
                 body: JSON.stringify({email, password})
             })
-            if(!response.ok) throw new Error("Error while logginf the user");
+            if(!response.ok) throw new Error("Error while logging the user");
             const data = await response.json();
             console.log("Success: ", data);
             localStorage.setItem('loginToken', data.token);
@@ -37,11 +37,11 @@ function Login() {
                     <div className="card-body">
                         <form onSubmit={handleLogIn}>
 
-                            <div class="mb-3">
+                            <div className="mb-3">
                                 <label htmlFor="emailInput" className="form-label">Email</label>
                                 <input onChange={(e)=>setEmail(e.target.value)} type="email" className="form-control" id="emailInput" placeholder="johndoe@example.com" required/>
                             </div>
-                            <div class="mb-3">
+                            <div className="mb-3">
                                 <label htmlFor="passwordInput" className="form-label">Password</label>
                                 <input onChange={(e)=>setPassword(e.target.value)} type="text" className="form-control" id="passwordInput" placeholder="Enter the password" required/>
                             </div>
