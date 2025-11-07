@@ -24,7 +24,7 @@ function ProjectMangement() {
                 return false;
             }
 
-            if (currentOwner !== 'All' && task.owners?.some((owner) => owner.name !== currentOwner)) {
+            if (currentOwner !== 'All' && !task.owners?.some((owner) => owner.name === currentOwner)) {
                 return false;
             }
             return true;
@@ -106,9 +106,9 @@ function ProjectMangement() {
 
                                     <br />
                                     <strong>Owners:</strong>
-                                    <span className="badge bg-secondary ms-2" onClick={() => updateFilter({ owners: 'All' })} style={{ cursor: 'pointer' }}>All</span>
+                                    <span className="badge bg-secondary ms-2" onClick={() => updateFilter({ owner: 'All' })} style={{ cursor: 'pointer' }}>All</span>
                                     {users?.users && users?.users?.length > 0 ? users?.users?.map((owner) => (
-                                        <span key={owner._id} onClick={() => updateFilter({ owners: owner.name })} className="badge bg-secondary ms-2" style={{ cursor: 'pointer' }}>{owner.name}</span>
+                                        <span key={owner._id} onClick={() => updateFilter({ owner: owner.name })} className="badge bg-secondary ms-2" style={{ cursor: 'pointer' }}>{owner.name}</span>
                                     )) : (
                                         <span className="badge bg-secondary ms-2">
                                             {userLoading && <div className="spinner-border text-light" role="status">
