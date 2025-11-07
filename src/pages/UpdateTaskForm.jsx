@@ -38,7 +38,7 @@ function UpdateTaskForm() {
         setTag(selectedTagValues)
     }
 
-    const owners = users?.users || [];
+    const ownerList = users?.users || [];
     function handleOwner(e) {
         let selectedTagValues = Array.from(e.target.selectedOptions, option => option.value);
         setOwnerName(selectedTagValues)
@@ -83,7 +83,7 @@ function UpdateTaskForm() {
             setIsSubmitting(false);
         }
     }
-    async function handleTaskCreation(e) {
+    async function handleTaskUpdate(e) {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitError(null);
@@ -153,7 +153,7 @@ function UpdateTaskForm() {
                                     <div className="alert alert-danger">{submitError}</div>
                                 )}
 
-                                <form onSubmit={handleTaskCreation}>
+                                <form onSubmit={handleTaskUpdate}>
                                     <div className="form-group my-2">
                                         <label htmlFor="taskName">Task Name</label>
                                         <input
@@ -192,8 +192,8 @@ function UpdateTaskForm() {
                                                 <option disabled>Loading owners...</option>
                                             ) : userError ? (
                                                 <option disabled>{userError}</option>
-                                            ) : owners.length > 0 ? (
-                                                owners.map((owner) => (
+                                            ) : ownerList.length > 0 ? (
+                                                ownerList.map((owner) => (
                                                     <option key={owner._id} value={owner._id}>
                                                         {owner.name}
                                                     </option>
@@ -275,10 +275,10 @@ function UpdateTaskForm() {
                                         {isSubmitting ? (
                                             <>
                                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                Creating...
+                                                Updating...
                                             </>
                                         ) : (
-                                            "Create task"
+                                            "Update task"
                                         )}
                                     </button>
                                 </form>
