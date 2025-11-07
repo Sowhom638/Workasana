@@ -105,7 +105,7 @@ function Settings() {
                             <div className="col-md-9 p-4">
                                 <h6 className="text-secondary fw-bold mb-3">project Names</h6>
                                 {submitError && (
-                                    <div className="alert alert-danger">{submitError}</div>
+                                    <div className="alert alert-danger">{JSON.stringify(submitError)}</div>
                                 )}
                                 <div className="d-flex flex-wrap gap-2 mb-4">
                                     <ul>

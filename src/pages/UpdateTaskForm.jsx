@@ -77,7 +77,7 @@ function UpdateTaskForm() {
             setNewTagName("");
             setTimeout(() => window.location.reload(), 700)
         } catch (error) {
-            submitError(error);
+            setSubmitError(error);
             toast.warning(error);
         } finally {
             setIsSubmitting(false);
@@ -120,7 +120,7 @@ function UpdateTaskForm() {
             toast.success("task is updated!");
             setTimeout(() => navigate(`/tasks/${taskId}`), 700)
         } catch (error) {
-            submitError(error);
+            setSubmitError(error);
             toast.warning(error);
         } finally {
             setIsSubmitting(false);
@@ -150,7 +150,7 @@ function UpdateTaskForm() {
                             {/* Main Content */}
                             <div className="col-md-9 p-4">
                                 {submitError && (
-                                    <div className="alert alert-danger">{submitError}</div>
+                                    <div className="alert alert-danger">{JSON.stringify(submitError)}</div>
                                 )}
 
                                 <form onSubmit={handleTaskUpdate}>

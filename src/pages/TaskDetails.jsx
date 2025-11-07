@@ -79,7 +79,7 @@ function TaskDetails() {
                             {/* Main Content */}
                             <div className="col-md-9 p-4">
                                 {submitError && (
-                                    <div className="alert alert-danger">{submitError}</div>
+                                    <div className="alert alert-danger">{JSON.stringify(submitError)}</div>
                                 )}
                                 <div className="mb-2">
                                     <h6 className="fw-bold mb-2 fs-5">Task Details</h6>

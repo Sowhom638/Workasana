@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../useFetch'
-import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import Header from '../components/Header';
 import { useState } from 'react';
@@ -73,13 +73,13 @@ function TeamManagement() {
               <div className="col-md-9 p-4">
                 <h6 className="text-secondary fw-bold mb-3">Team List</h6>
                 {submitError && (
-                  <div className="alert alert-danger">{submitError}</div>
+                  <div className="alert alert-danger">{JSON.stringify(submitError)}</div>
                 )}
                 <div className="d-flex flex-wrap gap-2 mb-4">
                   <ul>
                     {teams && teams?.teams?.length > 0 ? teams?.teams?.map((team) => (
                       <li key={team._id} className="my-1">
-                        <b>{team.name}</b>
+                        <Link to={`/teams/${team._id}`} className="text-decoration-none text-dark"><b>{team.name}</b> <MdKeyboardArrowRight /></Link>
                       </li>
                     )) : (
                       <span className="badge fs-5 bg-light text-dark border">

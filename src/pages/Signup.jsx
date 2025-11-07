@@ -31,7 +31,7 @@ function Signup() {
             setTimeout(() => navigate("/login"), 700);
             
         } catch (error) {
-            submitError(error);
+            setSubmitError(error);
             toast.warning(error);
         } finally {
             setIsSubmitting(false);
@@ -42,7 +42,7 @@ function Signup() {
             <div className="container w-75 mt-4">
                 <h2 className="mb-4 text-center">Workasana</h2>
                 {submitError && (
-                    <div className="alert alert-danger">{submitError}</div>
+                    <div className="alert alert-danger">{JSON.stringify(submitError)}</div>
                 )}
                 <div className="card shadow-sm border rounded-3">
                     <div className="card-header bg-white border-bottom text-center py-3">

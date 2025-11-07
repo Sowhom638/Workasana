@@ -15,6 +15,7 @@ import TaskDetails from './pages/TaskDetails.jsx'
 import Settings from './pages/Settings.jsx'
 import Reports from './pages/Reports.jsx'
 import UpdateTaskForm from './pages/UpdateTaskForm.jsx'
+import TeamDetails from './pages/TeamDetails.jsx'
  
 const router = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <TeamManagement />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/teams/:teamId",
+    element: (
+      <ProtectedRoute>
+        <TeamDetails />
       </ProtectedRoute>
     )
   },
