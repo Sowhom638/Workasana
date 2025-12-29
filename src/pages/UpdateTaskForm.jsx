@@ -20,7 +20,7 @@ function UpdateTaskForm() {
     const { data: teams, loading: teamLoading, error: teamError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/teams`);
     const { data: tagsData, loading: tagLoading, error: tagError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tags`);
     const { data: users, loading: userLoading, error: userError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/auth/users`);
-    const { data: task, loading: taskLoading, error: taskError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/${taskId}`);
+    const { data: task } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/${taskId}`);
 
     useEffect(()=>{
         if(task && task?.task){
