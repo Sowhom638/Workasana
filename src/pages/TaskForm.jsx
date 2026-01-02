@@ -20,7 +20,7 @@ function TaskForm() {
     const { data: teams, loading: teamLoading, error: teamError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/teams`);
     const { data: tagsData, loading: tagLoading, error: tagError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/tags`);
     const { data: users, loading: userLoading, error: userError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/auth/users`);
-    const { data: project, loading: projectLoading, error: projectError } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/projects/${projectId}`);
+    const { data: project } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/projects/${projectId}`);
 
     const tags = tagsData?.tags || [];
     function handleTag(e) {

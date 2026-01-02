@@ -1,8 +1,10 @@
-import { MdDangerous } from "react-icons/md";
+
+import { useNavigate } from "react-router-dom";
 import useFetch from "../useFetch";
 
 function Header() {
-    const { data: me, loading, error } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/auth/me`);
+    const { data: me } = useFetch(`${import.meta.env.VITE_BACKEND_URL}/auth/me`);
+    const navigate = useNavigate();
     function handleLogout() {
         localStorage.removeItem('loginToken');
         window.location.reload();
