@@ -914,7 +914,6 @@ function App() {
       <section className="wa-hero">
         <div className="wa-hero-inner">
           <div>
-            <div className="wa-hero-badge">🚀 Trusted by 10,000+ teams worldwide</div>
             <h1>Manage Projects<br/>with <span className="gradient-text">Crystal Clarity</span></h1>
             <p className="wa-hero-desc">
               A centralized platform that helps teams organize workflows, delegate responsibilities, and track progress in real time — all in one beautiful workspace.
